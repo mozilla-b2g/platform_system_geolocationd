@@ -1,0 +1,72 @@
+
+# geolocationd
+
+Geolocationd wraps Android's GPS driver behind a network protocol. The
+program is licensed under the Apache License 2.0. See the file LICENSE
+for more information.
+
+Geolocationd acts as a proxy between Android's GPS driver and an external
+program. It opens the GPS driver and waits on a socket connection for
+external commands (i.e., from Gecko). When a command arrives it executes
+a corresponding driver operation and reports back the result. If the
+GPS driver signals an event (i.e., a location update), geolocationd forwards
+a corresponding notification to the connected program.
+
+
+## Supported Versions
+
+Geolocationd supports Android with API version 14 or later.
+
+
+## Building
+
+Geolocationd should come as part of your B2G checkout. Otherwise, you can
+clone the repository into your local B2G checkout and add the target
+
+  geolocationd
+
+to the list of packages. See the file NOTICE for a pointer to the latest
+code release. Geolocationd requires
+
+  libfdio
+  libpdu
+
+Both libraries are available from the same location as geolocationd.
+
+
+## Protocol
+
+For IPC, geolocationd uses a protocol as defined in doc/ipc.txt. The protocol
+is supposed to be stable across releases.
+
+
+## Coding style
+
+Geolocationd is implemented in C. The dialect is C89 with GNU extensions. The
+coding style follows the guidelines for C++ as defined at
+
+  https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Coding_Style
+
+with the following exceptions:
+
+  * use lower case with underscores (foo_bar) instead of camel case (FooBar)
+
+  * no 'moz_' prefixes are required (or similar namespace separation)
+
+  * except for 'g_' for global variables
+
+  * in the general case return 0 for success and -1 for errors
+
+  * print an error message *exactly* where the error occurs
+
+  * use '#pragma once' instead of include guards
+
+
+## Submitting bug reports and patches
+
+Bug reports for geolocationd can be filed in Mozilla's bug tracker at
+
+  https://bugzilla.mozilla.org
+
+Patches are reviewed there as well. Please cc <tzimmermann@mozilla.com> in
+the bug report if you need help.

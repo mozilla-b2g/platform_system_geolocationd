@@ -1,0 +1,86 @@
+
+# *geolocationd* IPC protocol
+
+The program *geolocationd* implements a socket IPC protocol around
+the Android GPS HAL API. This document describes the IPC protocol
+used by *geolocationd.*
+
+Clients (i.e., external software) of GPS functionality establish a
+connection with *geolocationd* and send **command messages.** For
+each command, *Geolocationd* replies with a **response message.**
+Examples of commands are starting and stopping the location updates,
+or adding location data to the GPS system.
+
+In addition to responses, *geolocationd* also sends **notification
+messages** to inform its client about external events. Examples of
+notifications are GPS satellite poitions or location information.
+
+
+## Connection establishment
+
+Connections are **always** established by *geolocationd*. Supported
+sockets are in the domain AF_UNIX with type SOCK_SEQPACKET. The client
+shall
+
+ 1. create a compatible listen socket,
+ 2. set an abstract socket name,
+ 3. start listening on the created socket, and
+ 4. start *geolocationd*.
+
+The abstract socket name (excluding the trailing \0) is supplied to
+*geolocationd* via the -a command-line option. *Geolocationd* will
+establish a connection to the respective socket. If no socket name
+is given, the default is *geolocationd.*
+
+
+## IPC protocol
+
+The IPC protocol is PDU based. Each PDU contains exactly one message.
+There are 3 types of messages:
+
+ * commands,
+ * resonses, and
+ * notifications.
+
+All PDUs have the same format
+
+  +--------+--------+----------------+--- ... ---+
+  | Service| Opcode | Payload length |  Payload  |
+  +--------+--------+----------------+--- ... ---+
+       8        8           16         <variable>
+
+
+A **services** represents a group of messages, each **opcode** represents
+a message of the service. Commands and their responses use the same opcode
+and can be distinguished by the message's direction. Commands always flow
+from client to daemon, responses always flow from daemon to client.
+
+Notifications also always flow from daemon to client. They are distiguished
+from responses by their opcode, which has the MSB set for all notification
+messages.
+
+The IPC protocol is intended to be compatible with the HAL protocol for
+BlueZ [1].
+
+### Registry component
+
+The service ID is 0x00.
+
+#### Commands / Responses
+
+  * Opcode 0x00   Error response
+
+  * Opcode 0x01   Register component
+
+      + Command:  - Service id (1 octet)
+      + Response: - Protocol version (4 octets)
+
+  * Opcode 0x02   Unregister component
+
+      + Command:  - Service id (1 octet)
+      + Response: <none>
+
+
+## References
+
+[1] [Android HAL protocol for Bluetooth](https://git.kernel.org/cgit/bluetooth/bluez.git/tree/android/hal-ipc-api.txt)
