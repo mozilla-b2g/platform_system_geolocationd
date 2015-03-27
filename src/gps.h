@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-#include "service.h"
-#include "gps.h"
-#include "pdu.h"
+#pragma once
 
-int (*service_handler[256])(const struct pdu*);
+struct pdu;
+struct pdu_wbuf;
 
-register_func
-  (* const register_service[256])(void (*)(struct pdu_wbuf*)) = {
-  /* SERVICE_REGISTRY is special and not handled here */
-  [SERVICE_GPS] = register_gps
-};
+int
+(*register_gps(void (*send_pdu_cb)(struct pdu_wbuf*)))(const struct pdu*);
 
-int (*unregister_service[256])() = {
-  [SERVICE_GPS] = unregister_gps
-};
+int
+unregister_gps(void);
+
+const void*
+get_gps_extension(const char* name);

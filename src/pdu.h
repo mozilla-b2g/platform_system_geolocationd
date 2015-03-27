@@ -28,7 +28,8 @@ enum {
 };
 
 enum {
-  SERVICE_REGISTRY = 0x00
+  SERVICE_REGISTRY = 0x00,
+  SERVICE_GPS = 0x01
 };
 
 /* No GPS-specific errors, error codes kept in sync with Bluetooth status */

@@ -80,6 +80,104 @@ The service ID is 0x00.
       + Command:  - Service id (1 octet)
       + Response: <none>
 
+### GPS component
+
+Core GPS interface. The service ID is 0x01.
+
+#### Commands / Responses
+
+  * Opcode 0x00:  Error response
+
+  * Opcode 0x01:  Start
+
+      + Command:  <none>
+      + Response: <none>
+
+  * Opcode 0x02:  Stop
+
+      + Command:  <none>
+      + Response: <none>
+
+  * Opcode 0x03:  Inject time
+
+      + Command:  - UTC timestamp (8 octets)
+                  - Time reference (8 octets)
+                  - Uncertainty (4 octets)
+      + Response: <none>
+
+  * Opcode 0x04:  Inject location
+
+      + Command:  - Latitude (8 octets)
+                  - Longitude (8 octets)
+                  - Accuracy (4 octets)
+      + Response: <none>
+
+  * Opcode 0x05:  Delete aiding data
+
+      + Command:  - Aiding data (2 octets)
+      + Response: <none>
+
+  * Opcode 0x06:  Set position mode
+
+      + Command:  - Position mode (4 octets)
+                  - Position recurrence (4 octets)
+                  - Minimum interval (4 octets)
+                  - Preferred accuracy (4 octets)
+                  - Preferred time (4 octets)
+      + Response: <none>
+
+#### Notifications
+
+  * Opcode 0x81:  Location
+
+      - Location (46 octets)
+
+  * Opcode 0x82:  Status
+
+      - Status (2 octets)
+
+  * Opcode 0x83:  SV status
+
+      - Ephemeris mask (4 octets)
+      - Alamanac mask (4 octets)
+      - Used-in-fix mask (4 octets)
+      - Number of SV infos (1 octet)
+      - SV infos (variable)
+
+  * Opcode 0x84:  NMEA
+
+      - UTC timestamp (8 octets)
+      - Length (2 octets)
+      - NMEA (variable)
+
+  * Opcode 0x85:  Set capabilities
+
+      - Flags (4 octets)
+
+  * Request UTC time
+
+      - <none>
+
+#### Structures
+
+  * Location
+
+      - Flags (2 octets)
+      - Latitude (8 octets)
+      - Longitude (8 octets)
+      - Altitude (8 octets)
+      - Speed (4 octets)
+      - Bearing (4 octets)
+      - Accuracy (4 octets)
+      - UTC timestamp (8 octets)
+
+  * SV info
+
+      - PRN (4 octets)
+      - SNR (4 octets)
+      - Elevation (4 octets)
+      - Azimuth (4 octets)
+
 
 ## References
 
