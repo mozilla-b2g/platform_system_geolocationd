@@ -2,6 +2,7 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES:= agps.c \
+                  agps_ril.c \
                   gps.c \
                   io.c \
                   main.c \

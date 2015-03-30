@@ -238,6 +238,67 @@ Corresponds to  the GPS extension "agps". The service ID is 0x04.
                             - IPv6 address (16 octets)
                             - Scope ID (4 octets)
 
+### AGPS-RIL component
+
+Corresponds to  the GPS extension "agps-ril". The service ID is 0x07.
+
+#### Commands / Responses
+
+  * Opcode 0x01:  Set reference location
+
+      + Command:  - AGPS reference location (variable)
+      + Response: <none>
+
+  * Opcode 0x02:  Set set ID
+
+      + Command:  - Set ID type (2 octets)
+                  - Set ID (variable)
+      + Response: <none>
+
+  * Opcode 0x03:  Network-initiated message
+
+      + Command:  - Length (2 octets)
+                  - Message (variable)
+      + Response: <none>
+
+  * Opcode 0x04:  Update network state
+
+      + Command:  - Type (4 octets)
+                  - Connected (1 octet)
+                  - Roaming (1 octet)
+                  - Extra info (variable)
+      + Response: <none>
+
+  * Opcode 0x05:  Update network availability
+
+      + Command:  - Availability (1 octet)
+                  - APN name (variable)
+      + Response: <none>
+
+#### Notifications
+
+  * Opcode 0x81:  Request set ID
+
+      - Flags (4 octet)
+
+  * Opcode 0x82:  Request reference location
+
+      - Flags (4 octet)
+
+#### Structures
+
+  * AGPS reference location
+
+      - Type (2 octets)
+
+      IF type == MAC      - MAC ID (6 octets)
+
+      IF type == CELLID   - Cell ID type (2 octets)
+                          - MCC (2 octets)
+                          - MNC (2 octets)
+                          - LAC (2 octets)
+                          - CID (4 octets)
+
 
 ## References
 
