@@ -5,7 +5,8 @@ LOCAL_SRC_FILES:= io.c \
                   main.c \
                   pdu.c \
                   registry.c \
-                  service.c
+                  service.c \
+                  thread.c
 LOCAL_C_INCLUDES := system/libfdio/include \
                     system/libpdu/include
 LOCAL_CFLAGS := -DANDROID_VERSION=$(PLATFORM_SDK_VERSION) -Wall -Werror
