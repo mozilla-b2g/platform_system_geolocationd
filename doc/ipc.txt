@@ -178,6 +178,66 @@ Core GPS interface. The service ID is 0x01.
       - Elevation (4 octets)
       - Azimuth (4 octets)
 
+### AGPS component
+
+Corresponds to  the GPS extension "agps". The service ID is 0x04.
+
+#### Commands / Responses
+
+  * Opcode 0x01:  Data connection opened
+
+      + Command:  - APN name (variable)
+      + Response: <none>
+
+  * Opcode 0x02:  Data connection closed
+
+      + Command:  <none>
+      + Response: <none>
+
+  * Opcode 0x03:  Data connection failed
+
+      + Command:  <none>
+      + Response: <none>
+
+  * Opcode 0x04:  Set server
+
+      + Command:  - AGPS type (2 octets)
+                  - Port (2 octets)
+                  - Hostname (variable)
+      + Response: <none>
+
+  * Opcode 0x05:  Data connection opened with APN IP type
+
+      + Command:  - APN IP type (2 octets)
+                  - APN name (variable)
+      + Response: <none>
+
+#### Notifications
+
+  * Opcode 0x81:  Status
+
+      - Version (1 octet)
+      - Type (2 octets)
+      - Status (2 octets)
+
+      IF Version >= 2  - IP address (4 octets)
+
+      IF Version >= 3  - Address (variable)
+
+#### Structures
+
+  * Address
+
+      - Family (2 octets)
+
+      IF Family == AF_INET  - Port (2 octets)
+                            - IP address (octets)
+
+      IF Family == AF_INET6 - Port (2 octets)
+                            - IPv6 flow info (4 octets)
+                            - IPv6 address (16 octets)
+                            - Scope ID (4 octets)
+
 
 ## References
 
